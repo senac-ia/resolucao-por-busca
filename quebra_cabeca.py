@@ -1,20 +1,18 @@
 import random
 from dfs import dfs
+from bfs import bfs
 from aux import vertice_caminho, no_caminho
 from no import No
 
 class QuebraCabeca:
-  def __init__(self, estado):
-    self.estado = estado
-
   def iniciar(self):
     # estamos usando tuplas porque podemos usar dentro de conjuntos
     # não é possível usar listas [] em Sets {}
-    self.estado = ["_", "1", "2", "3", "4", "5", "6", "7", "8"]
-    random.shuffle(self.estado)
-    return tuple(self.estado)
+    lista_inicial = ["_", "1", "2", "3", "4", "5", "6", "7", "8"]
+    random.shuffle(lista_inicial)
+    return tuple(lista_inicial)
 
-  def imprime(self, estado):
+  def imprimir(self, estado):
     return "| " + estado[0] + " | " + estado[1] + " | " + estado[2] + " |\n| " + estado[3] + " | " + estado[4] + " | " + estado[5] + " |\n| " + estado[6] + " | " + estado[7] + " | " + estado[8] + " |"
 
   def testar_objetivo(self, estado):
@@ -65,11 +63,20 @@ class QuebraCabeca:
       sucessor_esquerda[posicao - 1] = "_"
       estado_vertice = (tuple(sucessor_esquerda), "⬅️")
       sucessores.append(estado_vertice)
+    
     return sucessores
 
-q = QuebraCabeca(None)
-no_solucao = dfs(q.iniciar(), q.testar_objetivo, q.gerar_sucessores, q.imprime)
-#no_solucao = dfs(("1", "2", "3", "4", "5", "6", "7", "8", "_"), q.testar_objetivo, q.gerar_sucessores, q.imprime)
+q = QuebraCabeca()
+estado_inicial = q.iniciar()
+print(q.imprimir(estado_inicial))
+
+#no_solucao = dfs(q.iniciar(), q.testar_objetivo, q.gerar_sucessores, q.imprimir)
+#no_solucao = dfs(("1", "2", "3", "4", "5", "6", "7", "8", "_"), q.testar_objetivo, q.gerar_sucessores, q.imprimir)
+no_solucao = bfs(estado_inicial, q.testar_objetivo, q.gerar_sucessores, q.imprimir)
+#no_solucao = bfs(("1", "2", "3", "4", "5", "6", "7", "8", "_"), q.testar_objetivo, q.gerar_sucessores, q.imprimir)
+
+# Não dá resultado
+# no_solucao = bfs(("1", "3", "6", "7", "8", "2", "_", "5", "4"), q.testar_objetivo, q.gerar_sucessores, q.imprimir)
 
 if(no_solucao is None):
   print("Não houve solução ao problema")
