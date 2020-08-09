@@ -1,28 +1,51 @@
-from pilha import Pilha
 from no import No
+from aux import imprime_atual, imprime_atual, imprime_sucessores
 
 # Depth-First Search - Busca em Profundidade
 # no_raiz => Instância de No
 # testar_objetivo => função que verifica se o estado atual é aceito
 # gerar_sucessores => Gera os nós sucessores de acordo com a regra do problema
-def dfs(no_raiz, testar_objetivo, gerar_sucessores):
+def dfs(estado_inicial, testar_objetivo, gerar_sucessores, imprimir=str, step=False):
   pilha = Pilha()
-  pilha.push(No(no_raiz, None))
-  visitados = {no_raiz} # Conjuntos (Sets) em python e {1, 2, 3}
+  pilha.push(No(estado_inicial))
+  visitados = {estado_inicial} # Conjuntos (Sets) em python e {1, 2, 3}
 
   while not pilha.esta_vazio():
     no_atual = pilha.pop()
     estado_atual = no_atual.estado
+    if step: imprime_atual(estado_atual, imprimir)
+
     # faz o teste objetivo conforme a função `teste_objetivo`
     if(testar_objetivo(estado_atual)):
       return no_atual
     
     # verifico os nos filhos e os adiciono na pilha
-    # função sucessores define os nós seguintes de 
-    for no_filho in gerar_sucessores(estado_atual):
-      if no_filho in visitados:
-        continue
-      visitados.add(no_filho)
-      pilha.push(No(no_filho, no_atual))
+    # função sucessores define os estados seguintes e adiciona os nós seguintes
+    estados_vertices_sucessores = gerar_sucessores(estado_atual)
+    if step: imprime_sucessores(estados_vertices_sucessores, imprimir)
 
-    return None
+    for estados_vertices_sucessor in estados_vertices_sucessores:
+      estado_filho = estados_vertices_sucessor[0]
+      vertice = estados_vertices_sucessor[1]
+      if estado_filho in visitados: # pula estado_filho se já foi expandido
+        continue
+      visitados.add(estado_filho)
+      pilha.push(No(estado_filho, no_atual, vertice))
+
+  return None
+
+class Pilha:
+  def __init__(self):
+    self.pilha = []
+  
+  def push(self, item):
+    self.pilha.append(item)
+  
+  def pop(self):
+    if(self.esta_vazio()):
+        return None
+    else:
+        return self.pilha.pop()
+
+  def esta_vazio(self):
+    return len(self.pilha) == 0
