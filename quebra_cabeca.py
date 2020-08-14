@@ -6,7 +6,7 @@ from no import No
 
 class QuebraCabeca:
   def iniciar(self):
-    # estamos usando tuplas porque podemos usar dentro de conjuntos
+    # estamos usando tuplas () porque podemos usar dentro de conjuntos
     # não é possível usar listas [] em Sets {}
     lista_inicial = ["_", "1", "2", "3", "4", "5", "6", "7", "8"]
     random.shuffle(lista_inicial)
@@ -19,68 +19,74 @@ class QuebraCabeca:
     return estado == ("1", "2", "3", "4", "5", "6", "7", "8", "_")
 
   # movimento do quadrado vazio
-  def gerar_sucessores(self, estado_atual):
+  def gerar_sucessores(self, estado):
     sucessores = []
 
     # encontra a posição do _
-    posicao = estado_atual.index("_")
+    posicao = estado.index("_")
 
+    expansoes = [self._direita, self._esquerda, self._cima, self._baixo]
+    random.shuffle(expansoes)
+    for expansao in expansoes:
+      sucessor = expansao(posicao, estado)
+      if sucessor is not None: sucessores.append(sucessor)
+
+    return sucessores
+
+  def _esquerda(self, posicao, estado_atual):
+    # movimento para esquerda
+    if posicao not in [0, 3, 6]:
+      # peça de baixo desce
+      sucessor = list(estado_atual)
+      sucessor[posicao] = sucessor[posicao - 1]
+      sucessor[posicao - 1] = "_"
+      return (tuple(sucessor), "⬅️")
+    
+  def _cima(self, posicao, estado_atual):
     # movimento para cima
     ## Não gera se estiver no topo
     if posicao not in [0, 1, 2]:
       # peça de baixo sobe
-      sucessor_cima = list(estado_atual)
-      sucessor_cima[posicao] = sucessor_cima[posicao - 3]
-      sucessor_cima[posicao - 3] = "_"
-      estado_vertice = (tuple(sucessor_cima), "⬆️")
-      sucessores.append(estado_vertice)
+      sucesso = list(estado_atual)
+      sucesso[posicao] = sucesso[posicao - 3]
+      sucesso[posicao - 3] = "_"
+      return (tuple(sucesso), "⬆️")
 
+  def _baixo(self, posicao, estado_atual):
     # movimento para baixo
     ## Não gera se estiver no fundo
     if posicao not in [6, 7, 8]:
       # peça de baixo desce
-      sucessor_baixo = list(estado_atual)
-      sucessor_baixo[posicao] = sucessor_baixo[posicao + 3]
-      sucessor_baixo[posicao + 3] = "_"
-      estado_vertice = (tuple(sucessor_baixo), "⬇️")
-      sucessores.append(estado_vertice)
+      sucessor = list(estado_atual)
+      sucessor[posicao] = sucessor[posicao + 3]
+      sucessor[posicao + 3] = "_"
+      return (tuple(sucessor), "⬇️")
 
+  def _direita(self, posicao, estado_atual):
     # movimento para direita
     ## Não gera se estiver na direita
     if posicao not in [2, 5, 8]:
       # peça de baixo desce
-      sucessor_direita = list(estado_atual)
-      sucessor_direita[posicao] = sucessor_direita[posicao + 1]
-      sucessor_direita[posicao + 1] = "_"
-      estado_vertice = (tuple(sucessor_direita), "➡️")
-      sucessores.append(estado_vertice)
-
-    # movimento para esquerda
-    if posicao not in [0, 3, 6]:
-      # peça de baixo desce
-      sucessor_esquerda = list(estado_atual)
-      sucessor_esquerda[posicao] = sucessor_esquerda[posicao - 1]
-      sucessor_esquerda[posicao - 1] = "_"
-      estado_vertice = (tuple(sucessor_esquerda), "⬅️")
-      sucessores.append(estado_vertice)
-    
-    return sucessores
+      sucessor = list(estado_atual)
+      sucessor[posicao] = sucessor[posicao + 1]
+      sucessor[posicao + 1] = "_"
+      return (tuple(sucessor), "➡️")
 
 q = QuebraCabeca()
+#estado_inicial = ("1", "2", "3", "4", "5", "6", "7", "8", "_")
+#("1", "3", "6", "7", "8", "2", "5", "_", "4") # não dá resultado
 estado_inicial = q.iniciar()
+
+no_solucao = dfs(estado_inicial, q.testar_objetivo, q.gerar_sucessores, q.imprimir)
+#no_solucao = bfs(estado_inicial, q.testar_objetivo, q.gerar_sucessores, q.imprimir)
+
+print("Estado Inicial:")
 print(q.imprimir(estado_inicial))
-
-#no_solucao = dfs(q.iniciar(), q.testar_objetivo, q.gerar_sucessores, q.imprimir)
-#no_solucao = dfs(("1", "2", "3", "4", "5", "6", "7", "8", "_"), q.testar_objetivo, q.gerar_sucessores, q.imprimir)
-no_solucao = bfs(estado_inicial, q.testar_objetivo, q.gerar_sucessores, q.imprimir)
-#no_solucao = bfs(("1", "2", "3", "4", "5", "6", "7", "8", "_"), q.testar_objetivo, q.gerar_sucessores, q.imprimir)
-
-# Não dá resultado
-# no_solucao = bfs(("1", "3", "6", "7", "8", "2", "_", "5", "4"), q.testar_objetivo, q.gerar_sucessores, q.imprimir)
 
 if(no_solucao is None):
   print("Não houve solução ao problema")
 else:
+  print("Solução:")
   #caminho = no_caminho(no_solucao)
   caminho = vertice_caminho(no_solucao)
   print(caminho)

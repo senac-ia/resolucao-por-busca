@@ -5,7 +5,7 @@ from aux import imprime_atual, imprime_atual, imprime_sucessores
 # no_raiz => Instância de No
 # testar_objetivo => função que verifica se o estado atual é aceito
 # gerar_sucessores => Gera os nós sucessores de acordo com a regra do problema
-def bfs(estado_inicial, testar_objetivo, gerar_sucessores, imprimir=str, step=False):
+def bfs(estado_inicial, testar_objetivo, gerar_sucessores, imprimir=str, stepEstado=False, stepSucessores=False):
   fila = Fila()
   fila.push(No(estado_inicial))
   visitados = {estado_inicial} # Conjuntos (Sets) em python e {1, 2, 3}
@@ -13,16 +13,18 @@ def bfs(estado_inicial, testar_objetivo, gerar_sucessores, imprimir=str, step=Fa
   while not fila.esta_vazio():
     no_atual = fila.pop()
     estado_atual = no_atual.estado
-    if step: imprime_atual(estado_atual, imprimir)
+
+    if stepEstado: imprime_atual(estado_atual, imprimir)
 
     # faz o teste objetivo conforme a função `teste_objetivo`
+    # para a execução se achou o objetivo
     if(testar_objetivo(estado_atual)):
       return no_atual
     
     # verifico os nos filhos e os adiciono na fila
     # função sucessores define os estados seguintes e adiciona os nós seguintes
     estados_vertices_sucessores = gerar_sucessores(estado_atual)
-    if step: imprime_sucessores(estados_vertices_sucessores, imprimir)
+    if stepSucessores: imprime_sucessores(estados_vertices_sucessores, imprimir)
 
     for estados_vertices_sucessor in estados_vertices_sucessores:
       estado_filho = estados_vertices_sucessor[0]
