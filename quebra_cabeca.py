@@ -12,13 +12,20 @@ class QuebraCabeca:
     random.shuffle(lista_inicial)
     return tuple(lista_inicial)
 
+  # Função auxiliar para imprimir no formato:
+  # | 3 | 7 | 2 |
+  # | _ | 4 | 5 |
+  # | 8 | 1 | 6 |
   def imprimir(self, estado):
     return "| " + estado[0] + " | " + estado[1] + " | " + estado[2] + " |\n| " + estado[3] + " | " + estado[4] + " | " + estado[5] + " |\n| " + estado[6] + " | " + estado[7] + " | " + estado[8] + " |"
 
+  # Função booleana que verifica se o estado atual
+  # é o estado objetivo do problema
   def testar_objetivo(self, estado):
     return estado == ("1", "2", "3", "4", "5", "6", "7", "8", "_")
 
-  # movimento do quadrado vazio
+  # Função que gera os sucessores válidos 
+  # a partir de um estado válido
   def gerar_sucessores(self, estado):
     sucessores = []
 
