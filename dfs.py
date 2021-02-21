@@ -5,6 +5,9 @@ from aux import imprime_atual, imprime_atual, imprime_sucessores
 # no_raiz => Instância de No
 # testar_objetivo => função que verifica se o estado atual é aceito
 # gerar_sucessores => Gera os nós sucessores de acordo com a regra do problema
+# imprimir => função de formatação para imprimir o estado
+# stepEstado => imprime o estado atual
+# stepSucessores => imprime os sucessores de cada passo
 def dfs(estado_inicial, testar_objetivo, gerar_sucessores, imprimir=str, stepEstado=False, stepSucessores=False):
   pilha = Pilha()
   pilha.push(No(estado_inicial))
@@ -25,7 +28,6 @@ def dfs(estado_inicial, testar_objetivo, gerar_sucessores, imprimir=str, stepEst
     estados_vertices_sucessores = gerar_sucessores(estado_atual)
     if stepSucessores: imprime_sucessores(estados_vertices_sucessores, imprimir)
 
-    print(len(visitados))
     for estados_vertices_sucessor in estados_vertices_sucessores:
       estado_filho = estados_vertices_sucessor[0]
       vertice = estados_vertices_sucessor[1]
@@ -33,9 +35,6 @@ def dfs(estado_inicial, testar_objetivo, gerar_sucessores, imprimir=str, stepEst
         continue
       visitados.add(estado_filho)
       pilha.push(No(estado_filho, no_atual, vertice))
-      
-      #print("Tamanho: " + str(pilha.tamanho()))
-
   return None
 
 class Pilha:

@@ -73,15 +73,10 @@ class QuebraCabeca:
       return (tuple(sucessor), "➡️")
 
 q = QuebraCabeca()
-#estado_inicial = ("1", "2", "3", "4", "5", "6", "7", "8", "_")
-#("1", "3", "6", "7", "8", "2", "5", "_", "4") # não dá resultado
 estado_inicial = q.iniciar()
 
 no_solucao = dfs(estado_inicial, q.testar_objetivo, q.gerar_sucessores, q.imprimir)
 #no_solucao = bfs(estado_inicial, q.testar_objetivo, q.gerar_sucessores, q.imprimir)
-
-print("Estado Inicial:")
-print(q.imprimir(estado_inicial))
 
 if(no_solucao is None):
   print("Não houve solução ao problema")
@@ -90,3 +85,6 @@ else:
   #caminho = no_caminho(no_solucao)
   caminho = vertice_caminho(no_solucao)
   print(caminho)
+
+print("Estado Inicial:")
+print(q.imprimir(estado_inicial))

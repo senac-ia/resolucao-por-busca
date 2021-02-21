@@ -5,6 +5,9 @@ from aux import imprime_atual, imprime_atual, imprime_sucessores
 # no_raiz => Instância de No
 # testar_objetivo => função que verifica se o estado atual é aceito
 # gerar_sucessores => Gera os nós sucessores de acordo com a regra do problema
+# imprimir => função de formatação para imprimir o estado
+# stepEstado => imprime o estado atual
+# stepSucessores => imprime os sucessores de cada passo
 def bfs(estado_inicial, testar_objetivo, gerar_sucessores, imprimir=str, stepEstado=False, stepSucessores=False):
   fila = Fila()
   fila.push(No(estado_inicial))
