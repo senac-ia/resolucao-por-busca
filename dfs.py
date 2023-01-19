@@ -11,7 +11,8 @@ from aux import imprime_atual, imprime_atual, imprime_sucessores
 def dfs(estado_inicial, testar_objetivo, gerar_sucessores, imprimir=str, stepEstado=False, stepSucessores=False):
   pilha = Pilha()
   pilha.push(No(estado_inicial))
-  visitados = {estado_inicial} # Conjuntos (Sets) em python e {1, 2, 3}
+  visitados = {tuple(estado_inicial)} # Conjuntos (Sets) em python e {1, 2, 3}
+  i = 0
 
   while not pilha.esta_vazio():
     no_atual = pilha.pop()
@@ -31,10 +32,13 @@ def dfs(estado_inicial, testar_objetivo, gerar_sucessores, imprimir=str, stepEst
     for estados_vertices_sucessor in estados_vertices_sucessores:
       estado_filho = estados_vertices_sucessor[0]
       vertice = estados_vertices_sucessor[1]
-      if estado_filho in visitados: # pula estado_filho se já foi expandido
+      if tuple(estado_filho) in visitados: # pula estado_filho se já foi expandido
         continue
-      visitados.add(estado_filho)
+      visitados.add(tuple(estado_filho))
       pilha.push(No(estado_filho, no_atual, vertice))
+    
+    i+=1
+    if i%1000 == 0: print(f"Interação:{i} , estados visitados: {len(visitados)}")
   return None
 
 class Pilha:

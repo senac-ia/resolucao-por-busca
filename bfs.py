@@ -11,12 +11,12 @@ from aux import imprime_atual, imprime_atual, imprime_sucessores
 def bfs(estado_inicial, testar_objetivo, gerar_sucessores, imprimir=str, stepEstado=False, stepSucessores=False):
   fila = Fila()
   fila.push(No(estado_inicial))
-  visitados = {estado_inicial} # Conjuntos (Sets) em python e {1, 2, 3}
+  visitados = {tuple(estado_inicial)} # Conjuntos (Sets) em python e {1, 2, 3}
+  i = 0
 
   while not fila.esta_vazio():
     no_atual = fila.pop()
     estado_atual = no_atual.estado
-
     if stepEstado: imprime_atual(estado_atual, imprimir)
 
     # faz o teste objetivo conforme a função `teste_objetivo`
@@ -32,10 +32,14 @@ def bfs(estado_inicial, testar_objetivo, gerar_sucessores, imprimir=str, stepEst
     for estados_vertices_sucessor in estados_vertices_sucessores:
       estado_filho = estados_vertices_sucessor[0]
       vertice = estados_vertices_sucessor[1]
-      if estado_filho in visitados: # pula estado_filho se já foi expandido
+      if tuple(estado_filho) in visitados: # pula estado_filho se já foi expandido
         continue
-      visitados.add(estado_filho)
+      visitados.add(tuple(estado_filho))
       fila.push(No(estado_filho, no_atual, vertice))
+    
+    i+=1
+    if i%1000 == 0: print(f"Interação:{i} , estados visitados: {len(visitados)}")
+  return None
 
 class Fila:
   def __init__(self):

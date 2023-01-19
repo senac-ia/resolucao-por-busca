@@ -3,11 +3,10 @@ import numpy as np
 
 class QuebraCabeca:
   def iniciar(self):
-    # estamos usando tuplas () porque podemos usar dentro de conjuntos
-    # não é possível usar listas [] em Sets {}
-    lista_inicial = ["_", "1", "2", "3", "4", "5", "6", "7", "8"]
-    random.shuffle(lista_inicial)
-    return tuple(lista_inicial)
+    self.estado_objetivo = np.array(["1", "2", "3", "4", "5", "6", "7", "8", "_"])
+    estado_inicial = np.array(["_", "1", "2", "3", "4", "5", "6", "7", "8"])
+    np.random.shuffle(estado_inicial)
+    return estado_inicial
 
   # Função auxiliar para imprimir no formato:
   # | 3 | 7 | 2 |
@@ -19,7 +18,7 @@ class QuebraCabeca:
   # Função booleana que verifica se o estado atual
   # é o estado objetivo do problema
   def testar_objetivo(self, estado):
-    return estado == ("1", "2", "3", "4", "5", "6", "7", "8", "_")
+    return np.array_equal(estado, self.estado_objetivo)
 
   # Função que gera os sucessores válidos 
   # a partir de um estado válido
@@ -27,7 +26,7 @@ class QuebraCabeca:
     sucessores = []
 
     # encontra a posição do _
-    posicao = estado.index("_")
+    posicao = np.where(estado == "_")[0][0]
 
     expansoes = [self._direita, self._esquerda, self._cima, self._baixo]
     random.shuffle(expansoes)
@@ -41,37 +40,37 @@ class QuebraCabeca:
     # movimento para esquerda
     if posicao not in [0, 3, 6]:
       # peça de baixo desce
-      sucessor = list(estado_atual)
+      sucessor = np.copy(estado_atual)
       sucessor[posicao] = sucessor[posicao - 1]
       sucessor[posicao - 1] = "_"
-      return (tuple(sucessor), "⬅️")
+      return (sucessor, "⬅️")
     
   def _cima(self, posicao, estado_atual):
     # movimento para cima
     ## Não gera se estiver no topo
     if posicao not in [0, 1, 2]:
       # peça de baixo sobe
-      sucesso = list(estado_atual)
+      sucesso = np.copy(estado_atual)
       sucesso[posicao] = sucesso[posicao - 3]
       sucesso[posicao - 3] = "_"
-      return (tuple(sucesso), "⬆️")
+      return (sucesso, "⬆️")
 
   def _baixo(self, posicao, estado_atual):
     # movimento para baixo
     ## Não gera se estiver no fundo
     if posicao not in [6, 7, 8]:
       # peça de baixo desce
-      sucessor = list(estado_atual)
+      sucessor = np.copy(estado_atual)
       sucessor[posicao] = sucessor[posicao + 3]
       sucessor[posicao + 3] = "_"
-      return (tuple(sucessor), "⬇️")
+      return (sucessor, "⬇️")
 
   def _direita(self, posicao, estado_atual):
     # movimento para direita
     ## Não gera se estiver na direita
     if posicao not in [2, 5, 8]:
       # peça de baixo desce
-      sucessor = list(estado_atual)
+      sucessor = np.copy(estado_atual)
       sucessor[posicao] = sucessor[posicao + 1]
       sucessor[posicao + 1] = "_"
-      return (tuple(sucessor), "➡️")
+      return (sucessor, "➡️")

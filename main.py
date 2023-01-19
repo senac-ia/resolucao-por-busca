@@ -3,7 +3,7 @@ from bfs import bfs
 from aux import vertice_caminho, no_caminho
 from quebra_cabeca import QuebraCabeca
 
-buscar = dfs
+buscar = bfs
 
 if __name__ == "__main__":
     q = QuebraCabeca()
