@@ -1,8 +1,5 @@
 import random
-from dfs import dfs
-from bfs import bfs
-from aux import vertice_caminho, no_caminho
-from no import No
+import numpy as np
 
 class QuebraCabeca:
   def iniciar(self):
@@ -78,20 +75,3 @@ class QuebraCabeca:
       sucessor[posicao] = sucessor[posicao + 1]
       sucessor[posicao + 1] = "_"
       return (tuple(sucessor), "➡️")
-
-q = QuebraCabeca()
-estado_inicial = q.iniciar()
-
-no_solucao = dfs(estado_inicial, q.testar_objetivo, q.gerar_sucessores, q.imprimir)
-#no_solucao = bfs(estado_inicial, q.testar_objetivo, q.gerar_sucessores, q.imprimir)
-
-if(no_solucao is None):
-  print("Não houve solução ao problema")
-else:
-  print("Solução:")
-  #caminho = no_caminho(no_solucao)
-  caminho = vertice_caminho(no_solucao)
-  print(caminho)
-
-print("Estado Inicial:")
-print(q.imprimir(estado_inicial))
