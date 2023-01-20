@@ -1,5 +1,4 @@
 from no import No
-from aux import imprime_atual, imprime_atual, imprime_sucessores
 
 # Depth-First Search - Busca em Profundidade
 def dfs(problema):
@@ -8,16 +7,16 @@ def dfs(problema):
   pilha = Pilha()
   pilha.push(No(estado_inicial))
   visitados = Visitados(estado_inicial)
-  iteracoes = 0
 
   while not pilha.esta_vazio():
     no = pilha.pop()
-    estado = no.estado
-    visitados.adicionar(estado)
+    visitados.adicionar(no)
 
-    # faz o teste objetivo conforme a função `teste_objetivo`
-    # para a execução se achou o objetivo
-    if(testar_objetivo(problema, no)): return no
+    # faz o teste objetivo. Se chegou no resultado final
+    # retorna o No correspondente
+    if(testar_objetivo(problema, no)):
+      print(f"Estados visitados: {visitados.tamanho()}")
+      return no
     
     # função sucessores define os Nós sucessores
     nos_sucessores = gerar_sucessores(problema, no)
@@ -25,10 +24,9 @@ def dfs(problema):
     # para cada sucessor, se armazena se ainda não visitado
     for no_sucessor in nos_sucessores:
       # pula estado_filho se já foi expandido
-      if not visitados.foi_visitado(no_sucessor.estado): pilha.push(no_sucessor)
+      if not visitados.foi_visitado(no_sucessor): pilha.push(no_sucessor)
 
-    iteracoes+=1
-    if iteracoes%1000 == 0: print(f"Interação: {iteracoes}, estados visitados: {visitados.tamanho()}")
+  print(f"Estados visitados: {visitados.tamanho()}")
   return None
 
 def testar_objetivo(problema, no):
@@ -45,11 +43,11 @@ class Visitados:
     # necessita ser uma tupla por ser comparável com ==
     self.visitados = set({tuple(estado_inicial)})
   
-  def adicionar(self, estado):
-    self.visitados.add(tuple(estado))
+  def adicionar(self, no):
+    self.visitados.add(tuple(no.estado))
   
-  def foi_visitado(self, estado):
-    return tuple(estado) in self.visitados
+  def foi_visitado(self, no):
+    return tuple(no.estado) in self.visitados
 
   def tamanho(self):
     return len(self.visitados)

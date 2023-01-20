@@ -1,5 +1,4 @@
 from no import No
-from aux import imprime_atual, imprime_atual, imprime_sucessores
 
 # Breadth-First Search - Busca em Largura
 def bfs(problema):
@@ -9,16 +8,17 @@ def bfs(problema):
   fila.push(No(estado_inicial))
 
   visitados = Visitados(estado_inicial)
-  iteracoes = 0
 
   while not fila.esta_vazio():
     no = fila.pop()
     estado = no.estado
     visitados.adicionar(estado)
 
-    # faz o teste objetivo conforme a função `teste_objetivo`
-    # para a execução se achou o objetivo
-    if(testar_objetivo(problema, no)): return no
+    # faz o teste objetivo. Se chegou no resultado final
+    # retorna o No correspondente
+    if(testar_objetivo(problema, no)):
+      print(f"Estados visitados: {visitados.tamanho()}")
+      return no
     
     # função sucessores define os Nós sucessores
     nos_sucessores = gerar_sucessores(problema, no)
@@ -28,8 +28,7 @@ def bfs(problema):
       # pula estado_filho se já foi expandido
       if not visitados.foi_visitado(no_sucessor.estado): fila.push(no_sucessor)
 
-    iteracoes+=1
-    if iteracoes%1000 == 0: print(f"Interação: {iteracoes}, estados visitados: {visitados.tamanho()}")
+  print(f"Estados visitados: {visitados.tamanho()}")
   return None
 
 def testar_objetivo(problema, no):

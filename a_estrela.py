@@ -1,9 +1,4 @@
 from no import No
-from aux import imprime_atual, imprime_atual, imprime_sucessores
-import heapq
-
-from no import No
-from aux import imprime_atual, imprime_atual, imprime_sucessores
 import heapq
 
 def a_estrela(estado_inicial, testar_objetivo, gerar_sucessores, heuristica, custo, imprimir=str, stepEstado=False, stepSucessores=False):
@@ -17,8 +12,6 @@ def a_estrela(estado_inicial, testar_objetivo, gerar_sucessores, heuristica, cus
     estado_atual = no_atual.estado
     visitados[tuple(estado_atual)] = no_atual.custo
 
-    if stepEstado: imprime_atual(estado_atual, imprimir)
-
     # faz o teste objetivo conforme a função `teste_objetivo`
     # para a execução se achou o objetivo
     if(testar_objetivo(estado_atual)):
@@ -27,7 +20,6 @@ def a_estrela(estado_inicial, testar_objetivo, gerar_sucessores, heuristica, cus
     # verifico os nos filhos e os adiciono na fila
     # função sucessores define os estados seguintes e adiciona os nós seguintes
     estados_vertices_sucessores = gerar_sucessores(estado_atual)
-    if stepSucessores: imprime_sucessores(estados_vertices_sucessores, imprimir)
 
     for estados_vertices_sucessor in estados_vertices_sucessores:
       estado_filho = estados_vertices_sucessor[0]
