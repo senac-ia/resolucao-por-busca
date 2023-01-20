@@ -11,12 +11,13 @@ from aux import imprime_atual, imprime_atual, imprime_sucessores
 def bfs(estado_inicial, testar_objetivo, gerar_sucessores, imprimir=str, stepEstado=False, stepSucessores=False):
   fila = Fila()
   fila.push(No(estado_inicial))
-  visitados = {tuple(estado_inicial)} # Conjuntos (Sets) em python e {1, 2, 3}
+  visitados = Visitados(estado_inicial)
   i = 0
 
   while not fila.esta_vazio():
     no_atual = fila.pop()
     estado_atual = no_atual.estado
+    visitados.adicionar(estado_atual)
     if stepEstado: imprime_atual(estado_atual, imprimir)
 
     # faz o teste objetivo conforme a função `teste_objetivo`
@@ -32,14 +33,29 @@ def bfs(estado_inicial, testar_objetivo, gerar_sucessores, imprimir=str, stepEst
     for estados_vertices_sucessor in estados_vertices_sucessores:
       estado_filho = estados_vertices_sucessor[0]
       vertice = estados_vertices_sucessor[1]
-      if tuple(estado_filho) in visitados: # pula estado_filho se já foi expandido
-        continue
-      visitados.add(tuple(estado_filho))
-      fila.push(No(estado_filho, no_atual, vertice))
-    
+
+      # pula estado_filho se já foi expandido
+      if not visitados.foi_visitado(estado_filho): 
+        fila.push(No(estado_filho, no_atual, vertice))
+
     i+=1
-    if i%1000 == 0: print(f"Interação:{i} , estados visitados: {len(visitados)}")
+    if i%1000 == 0: print(f"Interação:{i} , estados visitados: {visitados.tamanho()}")
   return None
+
+class Visitados:
+  def __init__(self, estado_inicial):
+    # Conjuntos (Sets) em python e {1, 2, 3}
+    # necessita ser uma tupla por ser comparável com ==
+    self.visitados = {tuple(estado_inicial)} 
+  
+  def adicionar(self, estado):
+    self.visitados.add(tuple(estado))
+  
+  def foi_visitado(self, estado):
+    return tuple(estado) in self.visitados
+
+  def tamanho(self):
+    return len(self.visitados)
 
 class Fila:
   def __init__(self):
