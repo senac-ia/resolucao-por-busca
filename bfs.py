@@ -39,7 +39,7 @@ def bfs(estado_inicial, testar_objetivo, gerar_sucessores, imprimir=str, stepEst
         fila.push(No(estado_filho, no_atual, vertice))
 
     i+=1
-    if i%1000 == 0: print(f"Interação:{i} , estados visitados: {visitados.tamanho()}")
+    if i%1000 == 0: print(f"Interação: {i}, estados visitados: {visitados.tamanho()}")
   return None
 
 class Visitados:

@@ -74,3 +74,38 @@ class QuebraCabeca:
       sucessor[posicao] = sucessor[posicao + 1]
       sucessor[posicao + 1] = "_"
       return (sucessor, "➡️")
+
+  # Heurística 1: Checar se os valores 
+  # esta heurística não é admissível, pois, pode dificultar 
+  # a chegada de um resultado final
+  def heuristica(self, estado):
+    resultado = ["1", "2", "3", "4", "5", "6", "7", "8", "_"]
+    return sum(1 for i in range(len(resultado)) if resultado[i] == estado[i])
+
+  # Heurística 2: Distância para o resultado espero
+  # Heurística adminissível, pois, sempre o resultado chega mais perto
+  # Transformei o array em matriz para fazer cálculo de distância
+  def heuristica2(self, estado):
+    resultado = [["1", "2", "3"], ["4", "5", "6"], ["7", "8", "_"]]
+    estado_matriz = [estado[0:3], estado[3:6], estado[6:9]]
+
+    soma = 0
+
+    for i in range(len(resultado)):
+      for j in range(len(resultado[i])):
+        valor = resultado[i][j]
+        soma = soma + self.distancia_manhattan(valor, estado_matriz, i, j)
+
+    return soma
+
+  # Distância de Manhattan: d = |xi-xj| + |yi-yj|
+  def distancia_manhattan(self, valor, estado, i, j):
+    for k in range(len(estado)):
+      for h in range(len(estado[k])):
+        if valor == estado[k][h]: return abs(i-k)+abs(j-h)
+    
+  # Função de custo: Quando custa mover de um 
+  # estado_origem para estado_destino. No Quebra Cabeça 
+  # de 8, este custo é fixo e arbitrariamente será 1.
+  def custo(self, estado_origem, estado_destino):
+    return 1
