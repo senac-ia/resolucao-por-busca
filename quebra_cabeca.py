@@ -1,5 +1,6 @@
 import random
 import numpy as np
+from no import No
 
 class QuebraCabeca:
   def iniciar(self):
@@ -43,7 +44,7 @@ class QuebraCabeca:
       sucessor = np.copy(estado_atual)
       sucessor[posicao] = sucessor[posicao - 1]
       sucessor[posicao - 1] = "_"
-      return (sucessor, "⬅️")
+      return No(sucessor, None, "⬅️")
     
   def _cima(self, posicao, estado_atual):
     # movimento para cima
@@ -53,7 +54,7 @@ class QuebraCabeca:
       sucesso = np.copy(estado_atual)
       sucesso[posicao] = sucesso[posicao - 3]
       sucesso[posicao - 3] = "_"
-      return (sucesso, "⬆️")
+      return No(sucesso, None, "⬆️")
 
   def _baixo(self, posicao, estado_atual):
     # movimento para baixo
@@ -63,7 +64,7 @@ class QuebraCabeca:
       sucessor = np.copy(estado_atual)
       sucessor[posicao] = sucessor[posicao + 3]
       sucessor[posicao + 3] = "_"
-      return (sucessor, "⬇️")
+      return No(sucessor, None, "⬇️")
 
   def _direita(self, posicao, estado_atual):
     # movimento para direita
@@ -73,7 +74,7 @@ class QuebraCabeca:
       sucessor = np.copy(estado_atual)
       sucessor[posicao] = sucessor[posicao + 1]
       sucessor[posicao + 1] = "_"
-      return (sucessor, "➡️")
+      return No(sucessor, None, "➡️")
 
   # Heurística 1: Checar se os valores 
   # esta heurística não é admissível, pois, pode dificultar 
