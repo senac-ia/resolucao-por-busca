@@ -43,7 +43,7 @@ class Visitados:
   def __init__(self, estado_inicial):
     # Conjuntos (Sets) em python e {1, 2, 3}
     # necessita ser uma tupla por ser comparável com ==
-    self.visitados = {tuple(estado_inicial)} 
+    self.visitados = set({tuple(estado_inicial)})
   
   def adicionar(self, estado):
     self.visitados.add(tuple(estado))
