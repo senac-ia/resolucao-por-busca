@@ -6,10 +6,9 @@ from quebra_cabeca import QuebraCabeca
 
 
 if __name__ == "__main__":
-    q = QuebraCabeca()
-    estado_inicial = q.iniciar()
+    problema = QuebraCabeca()
 
-    no_solucao = dfs(estado_inicial, q.testar_objetivo, q.gerar_sucessores)
+    no_solucao = dfs(problema)
     # no_solucao = a_estrela(estado_inicial, 
     #                         q.testar_objetivo, 
     #                         q.gerar_sucessores, 
@@ -26,4 +25,4 @@ if __name__ == "__main__":
         print(caminho)
 
         print("Estado Inicial:")
-        print(q.imprimir(estado_inicial))
+        print(problema.imprimir(problema.estado_inicial))

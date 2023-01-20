@@ -5,9 +5,9 @@ from no import No
 class QuebraCabeca:
   def iniciar(self):
     self.estado_objetivo = np.array(["1", "2", "3", "4", "5", "6", "7", "8", "_"])
-    estado_inicial = np.array(["_", "1", "2", "3", "4", "5", "6", "7", "8"])
-    np.random.shuffle(estado_inicial)
-    return estado_inicial
+    self.estado_inicial = np.array(["_", "1", "2", "3", "4", "5", "6", "7", "8"])
+    np.random.shuffle(self.estado_inicial)
+    return self.estado_inicial
 
   # Função auxiliar para imprimir no formato:
   # | 3 | 7 | 2 |
@@ -44,17 +44,17 @@ class QuebraCabeca:
       sucessor = np.copy(estado_atual)
       sucessor[posicao] = sucessor[posicao - 1]
       sucessor[posicao - 1] = "_"
-      return No(sucessor, None, "⬅️")
+      return (sucessor, "⬅️")
     
   def _cima(self, posicao, estado_atual):
     # movimento para cima
     ## Não gera se estiver no topo
     if posicao not in [0, 1, 2]:
       # peça de baixo sobe
-      sucesso = np.copy(estado_atual)
-      sucesso[posicao] = sucesso[posicao - 3]
-      sucesso[posicao - 3] = "_"
-      return No(sucesso, None, "⬆️")
+      sucessor = np.copy(estado_atual)
+      sucessor[posicao] = sucessor[posicao - 3]
+      sucessor[posicao - 3] = "_"
+      return (sucessor, "⬆️")
 
   def _baixo(self, posicao, estado_atual):
     # movimento para baixo
@@ -64,7 +64,7 @@ class QuebraCabeca:
       sucessor = np.copy(estado_atual)
       sucessor[posicao] = sucessor[posicao + 3]
       sucessor[posicao + 3] = "_"
-      return No(sucessor, None, "⬇️")
+      return (sucessor, "⬇️")
 
   def _direita(self, posicao, estado_atual):
     # movimento para direita
@@ -74,7 +74,7 @@ class QuebraCabeca:
       sucessor = np.copy(estado_atual)
       sucessor[posicao] = sucessor[posicao + 1]
       sucessor[posicao + 1] = "_"
-      return No(sucessor, None, "➡️")
+      return (sucessor, "➡️")
 
   # Heurística 1: Checar se os valores 
   # esta heurística não é admissível, pois, pode dificultar 
