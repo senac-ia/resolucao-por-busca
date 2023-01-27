@@ -13,3 +13,18 @@ def vertice_caminho(no):
     if no.vertice is not None: caminho.append(no.vertice)
   caminho.reverse()
   return caminho
+
+class Visitados:
+  def __init__(self, no):
+    # Conjuntos (Sets) em python e {1, 2, 3}
+    # necessita ser uma tupla por ser comparável com ==
+    self.visitados = set({tuple(no.estado)})
+  
+  def adicionar(self, estado):
+    self.visitados.add(tuple(estado))
+  
+  def foi_visitado(self, estado):
+    return tuple(estado) in self.visitados
+
+  def tamanho(self):
+    return len(self.visitados)

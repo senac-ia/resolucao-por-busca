@@ -1,4 +1,5 @@
 from no import No
+from aux import Visitados
 
 # Depth-First Search - Busca em Profundidade
 def dfs(problema):
@@ -7,11 +8,11 @@ def dfs(problema):
   pilha = Pilha()
   pilha.push(no)
 
-  visitados = Visitados(no.estado)
+  visitados = Visitados(no)
 
   while not pilha.esta_vazio():
     no = pilha.pop()
-    visitados.adicionar(no)
+    visitados.adicionar(no.estado)
 
     # faz o teste objetivo. Se chegou no resultado final
     # retorna o No correspondente
@@ -25,7 +26,7 @@ def dfs(problema):
     # para cada sucessor, se armazena se ainda não visitado
     for no_sucessor in nos_sucessores:
       # pula estado_filho se já foi expandido
-      if not visitados.foi_visitado(no_sucessor): pilha.push(no_sucessor)
+      if not visitados.foi_visitado(no_sucessor.estado): pilha.push(no_sucessor)
 
   print(f"Estados visitados: {visitados.tamanho()}")
   return None
@@ -37,21 +38,6 @@ def gerar_sucessores(problema, no):
   sucessores = problema.gerar_sucessores(no.estado)
   nos_sucessores = [No(estado, no, aresta) for (estado, aresta) in sucessores]
   return nos_sucessores
-
-class Visitados:
-  def __init__(self, estado_inicial):
-    # Conjuntos (Sets) em python e {1, 2, 3}
-    # necessita ser uma tupla por ser comparável com ==
-    self.visitados = set({tuple(estado_inicial)})
-  
-  def adicionar(self, no):
-    self.visitados.add(tuple(no.estado))
-  
-  def foi_visitado(self, no):
-    return tuple(no.estado) in self.visitados
-
-  def tamanho(self):
-    return len(self.visitados)
 
 class Pilha:
   def __init__(self):
