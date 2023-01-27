@@ -1,4 +1,3 @@
-from no import No
 from aux import Visitados
 
 # Breadth-First Search - Busca em Largura

@@ -1,4 +1,3 @@
-from no import No
 from aux import Visitados
 
 # Depth-First Search - Busca em Profundidade
