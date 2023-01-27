@@ -2,11 +2,12 @@ from no import No
 
 # Depth-First Search - Busca em Profundidade
 def dfs(problema):
-  estado_inicial = problema.iniciar()
+  no = problema.iniciar()
 
   pilha = Pilha()
-  pilha.push(No(estado_inicial))
-  visitados = Visitados(estado_inicial)
+  pilha.push(no)
+
+  visitados = Visitados(no.estado)
 
   while not pilha.esta_vazio():
     no = pilha.pop()

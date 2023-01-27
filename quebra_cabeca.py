@@ -7,7 +7,7 @@ class QuebraCabeca:
     self.estado_objetivo = np.array(["1", "2", "3", "4", "5", "6", "7", "8", "_"])
     self.estado_inicial = np.array(["_", "1", "2", "3", "4", "5", "6", "7", "8"])
     np.random.shuffle(self.estado_inicial)
-    return self.estado_inicial
+    return No(self.estado_inicial)
 
   # Função auxiliar para imprimir no formato:
   # | 3 | 7 | 2 |

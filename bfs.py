@@ -2,12 +2,12 @@ from no import No
 
 # Breadth-First Search - Busca em Largura
 def bfs(problema):
-  estado_inicial = problema.iniciar()
+  no = problema.iniciar()
 
   fila = Fila()
-  fila.push(No(estado_inicial))
+  fila.push(no)
 
-  visitados = Visitados(estado_inicial)
+  visitados = Visitados(no.estado)
 
   while not fila.esta_vazio():
     no = fila.pop()
