@@ -27,7 +27,7 @@ class QuebraCabeca:
   # a partir de um estado válido
   def gerar_sucessores(self, no):
     estado = no.estado
-    sucessores = []
+    nos_sucessores = []
 
     # encontra a posição do _
     posicao = np.where(estado == "_")[0][0]
@@ -35,50 +35,57 @@ class QuebraCabeca:
     expansoes = [self._direita, self._esquerda, self._cima, self._baixo]
     random.shuffle(expansoes)
     for expansao in expansoes:
-      sucessor = expansao(posicao, estado)
-      if sucessor is not None: sucessores.append(sucessor)
+      no_sucessor = expansao(posicao, no)
+      if no_sucessor is not None: nos_sucessores.append(no_sucessor)
 
-    nos_sucessores = [No(estado, no, aresta) for (estado, aresta) in sucessores]
     return nos_sucessores
 
-  def _esquerda(self, posicao, estado_atual):
+  def _esquerda(self, posicao, no):
     # movimento para esquerda
     if posicao not in [0, 3, 6]:
       # peça de baixo desce
-      sucessor = np.copy(estado_atual)
+      sucessor = np.copy(no.estado)
       sucessor[posicao] = sucessor[posicao - 1]
       sucessor[posicao - 1] = "_"
-      return (sucessor, "⬅️")
+      return No(sucessor, no, "⬅️")
+    else:
+      None
     
-  def _cima(self, posicao, estado_atual):
+  def _cima(self, posicao, no):
     # movimento para cima
     ## Não gera se estiver no topo
     if posicao not in [0, 1, 2]:
       # peça de baixo sobe
-      sucessor = np.copy(estado_atual)
+      sucessor = np.copy(no.estado)
       sucessor[posicao] = sucessor[posicao - 3]
       sucessor[posicao - 3] = "_"
-      return (sucessor, "⬆️")
+      return No(sucessor, no, "⬆️")
+    else:
+      None
 
-  def _baixo(self, posicao, estado_atual):
+  def _baixo(self, posicao, no):
     # movimento para baixo
     ## Não gera se estiver no fundo
     if posicao not in [6, 7, 8]:
       # peça de baixo desce
-      sucessor = np.copy(estado_atual)
+      sucessor = np.copy(no.estado)
       sucessor[posicao] = sucessor[posicao + 3]
       sucessor[posicao + 3] = "_"
-      return (sucessor, "⬇️")
+      return No(sucessor, no, "⬇️")
+    else:
+      None
 
-  def _direita(self, posicao, estado_atual):
+  def _direita(self, posicao, no):
     # movimento para direita
     ## Não gera se estiver na direita
     if posicao not in [2, 5, 8]:
       # peça de baixo desce
-      sucessor = np.copy(estado_atual)
+      sucessor = np.copy(no.estado)
       sucessor[posicao] = sucessor[posicao + 1]
       sucessor[posicao + 1] = "_"
-      return (sucessor, "➡️")
+      return No(sucessor, no, "➡️")
+    else:
+      None
 
   # Heurística 1: Checar se os valores 
   # esta heurística não é admissível, pois, pode dificultar 
