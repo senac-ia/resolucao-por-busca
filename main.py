@@ -25,4 +25,4 @@ if __name__ == "__main__":
         print(caminho)
 
         print("Estado Inicial:")
-        print(problema.imprimir(problema.estado_inicial))
+        print(problema.imprimir(problema.no_raiz))

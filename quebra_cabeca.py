@@ -7,13 +7,15 @@ class QuebraCabeca:
     self.estado_objetivo = np.array(["1", "2", "3", "4", "5", "6", "7", "8", "_"])
     self.estado_inicial = np.array(["_", "1", "2", "3", "4", "5", "6", "7", "8"])
     np.random.shuffle(self.estado_inicial)
-    return No(self.estado_inicial)
+    self.no_raiz = No(self.estado_inicial)
+    return self.no_raiz
 
   # Função auxiliar para imprimir no formato:
   # | 3 | 7 | 2 |
   # | _ | 4 | 5 |
   # | 8 | 1 | 6 |
-  def imprimir(self, estado):
+  def imprimir(self, no):
+    estado = no.estado
     return "| " + estado[0] + " | " + estado[1] + " | " + estado[2] + " |\n| " + estado[3] + " | " + estado[4] + " | " + estado[5] + " |\n| " + estado[6] + " | " + estado[7] + " | " + estado[8] + " |"
 
   # Função booleana que verifica se o estado atual
