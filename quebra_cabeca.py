@@ -99,12 +99,12 @@ class QuebraCabeca:
     for i in range(len(resultado)):
       for j in range(len(resultado[i])):
         valor = resultado[i][j]
-        soma = soma + self.distancia_manhattan(valor, estado_matriz, i, j)
+        soma = soma + self._distancia_manhattan(valor, estado_matriz, i, j)
 
     return soma
 
   # Distância de Manhattan: d = |xi-xj| + |yi-yj|
-  def distancia_manhattan(self, valor, estado, i, j):
+  def _distancia_manhattan(self, valor, estado, i, j):
     for k in range(len(estado)):
       for h in range(len(estado[k])):
         if valor == estado[k][h]: return abs(i-k)+abs(j-h)
