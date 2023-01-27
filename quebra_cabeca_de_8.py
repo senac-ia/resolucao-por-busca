@@ -2,11 +2,16 @@ import random
 import numpy as np
 from no import No
 
-class QuebraCabeca:
-  def iniciar(self):
+class QuebraCabecaDe8:
+  def __init__(self):
     self.estado_objetivo = np.array(["1", "2", "3", "4", "5", "6", "7", "8", "_"])
     self.estado_inicial = np.array(["_", "1", "2", "3", "4", "5", "6", "7", "8"])
     np.random.shuffle(self.estado_inicial)
+    
+  def define_estado_inicial(self, estado):
+    self.estado_inicial = estado
+
+  def iniciar(self):
     self.no_raiz = No(self.estado_inicial)
     return self.no_raiz
 
