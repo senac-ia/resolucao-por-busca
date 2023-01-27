@@ -17,7 +17,7 @@ def vertice_caminho(no):
 class Visitados:
   def __init__(self):
     # Conjuntos (Sets) em python e {1, 2, 3}
-    # necessita ser uma tupla por ser comparável com ==
+    # necessita ser uma tupla ou string por ser comparável com ==
     self.visitados = set()
   
   def adicionar(self, no):
