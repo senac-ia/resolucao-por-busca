@@ -1,4 +1,5 @@
 from no import No
+from aux import Visitados
 
 # Breadth-First Search - Busca em Largura
 def bfs(problema):
@@ -7,12 +8,12 @@ def bfs(problema):
   fila = Fila()
   fila.push(no)
 
-  visitados = Visitados(no.estado)
+  visitados = Visitados()
 
   while not fila.esta_vazio():
     no = fila.pop()
     estado = no.estado
-    visitados.adicionar(estado)
+    visitados.adicionar(no)
 
     # faz o teste objetivo. Se chegou no resultado final
     # retorna o No correspondente
@@ -26,7 +27,7 @@ def bfs(problema):
     # para cada sucessor, se armazena se ainda não visitado
     for no_sucessor in nos_sucessores:
       # pula estado_filho se já foi expandido
-      if not visitados.foi_visitado(no_sucessor.estado): fila.push(no_sucessor)
+      if not visitados.foi_visitado(no_sucessor): fila.push(no_sucessor)
 
   print(f"Estados visitados: {visitados.tamanho()}")
   return None
@@ -38,21 +39,6 @@ def gerar_sucessores(problema, no):
   sucessores = problema.gerar_sucessores(no.estado)
   nos_sucessores = [No(estado, no, aresta) for (estado, aresta) in sucessores]
   return nos_sucessores
-
-class Visitados:
-  def __init__(self, estado_inicial):
-    # Conjuntos (Sets) em python e {1, 2, 3}
-    # necessita ser uma tupla por ser comparável com ==
-    self.visitados = set({tuple(estado_inicial)})
-  
-  def adicionar(self, estado):
-    self.visitados.add(tuple(estado))
-  
-  def foi_visitado(self, estado):
-    return tuple(estado) in self.visitados
-
-  def tamanho(self):
-    return len(self.visitados)
 
 class Fila:
   def __init__(self):

@@ -8,7 +8,7 @@ def dfs(problema):
   pilha = Pilha()
   pilha.push(no)
 
-  visitados = Visitados(no)
+  visitados = Visitados()
 
   while not pilha.esta_vazio():
     no = pilha.pop()

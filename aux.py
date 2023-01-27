@@ -15,10 +15,10 @@ def vertice_caminho(no):
   return caminho
 
 class Visitados:
-  def __init__(self, no):
+  def __init__(self):
     # Conjuntos (Sets) em python e {1, 2, 3}
     # necessita ser uma tupla por ser comparável com ==
-    self.visitados = set({tuple(no.estado)})
+    self.visitados = set()
   
   def adicionar(self, no):
     self.visitados.add(tuple(no.estado))
