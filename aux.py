@@ -20,11 +20,11 @@ class Visitados:
     # necessita ser uma tupla por ser comparável com ==
     self.visitados = set({tuple(no.estado)})
   
-  def adicionar(self, estado):
-    self.visitados.add(tuple(estado))
+  def adicionar(self, no):
+    self.visitados.add(tuple(no.estado))
   
-  def foi_visitado(self, estado):
-    return tuple(estado) in self.visitados
+  def foi_visitado(self, no):
+    return tuple(no.estado) in self.visitados
 
   def tamanho(self):
     return len(self.visitados)
