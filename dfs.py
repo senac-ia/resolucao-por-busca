@@ -16,12 +16,12 @@ def dfs(problema):
 
     # faz o teste objetivo. Se chegou no resultado final
     # retorna o No correspondente
-    if(testar_objetivo(problema, no)):
+    if(problema.testar_objetivo(no)):
       print(f"Estados visitados: {visitados.tamanho()}")
       return no
     
     # função sucessores define os Nós sucessores
-    nos_sucessores = gerar_sucessores(problema, no)
+    nos_sucessores = problema.gerar_sucessores(no)
 
     # para cada sucessor, se armazena se ainda não visitado
     for no_sucessor in nos_sucessores:
@@ -30,14 +30,6 @@ def dfs(problema):
 
   print(f"Estados visitados: {visitados.tamanho()}")
   return None
-
-def testar_objetivo(problema, no):
-  return problema.testar_objetivo(no.estado)
-
-def gerar_sucessores(problema, no):
-  sucessores = problema.gerar_sucessores(no.estado)
-  nos_sucessores = [No(estado, no, aresta) for (estado, aresta) in sucessores]
-  return nos_sucessores
 
 class Pilha:
   def __init__(self):

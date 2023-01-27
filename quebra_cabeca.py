@@ -18,12 +18,13 @@ class QuebraCabeca:
 
   # Função booleana que verifica se o estado atual
   # é o estado objetivo do problema
-  def testar_objetivo(self, estado):
-    return np.array_equal(estado, self.estado_objetivo)
+  def testar_objetivo(self, no):
+    return np.array_equal(no.estado, self.estado_objetivo)
 
   # Função que gera os sucessores válidos 
   # a partir de um estado válido
-  def gerar_sucessores(self, estado):
+  def gerar_sucessores(self, no):
+    estado = no.estado
     sucessores = []
 
     # encontra a posição do _
@@ -35,7 +36,8 @@ class QuebraCabeca:
       sucessor = expansao(posicao, estado)
       if sucessor is not None: sucessores.append(sucessor)
 
-    return sucessores
+    nos_sucessores = [No(estado, no, aresta) for (estado, aresta) in sucessores]
+    return nos_sucessores
 
   def _esquerda(self, posicao, estado_atual):
     # movimento para esquerda

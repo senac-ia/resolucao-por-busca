@@ -8,7 +8,7 @@ from quebra_cabeca import QuebraCabeca
 if __name__ == "__main__":
     problema = QuebraCabeca()
 
-    no_solucao = bfs(problema)
+    no_solucao = dfs(problema)
     # no_solucao = a_estrela(estado_inicial, 
     #                         q.testar_objetivo, 
     #                         q.gerar_sucessores, 
