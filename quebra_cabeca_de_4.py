@@ -36,9 +36,19 @@ class QuebraCabecaDe4:
 
     # encontra a posição do _
     posicao = np.where(estado == "_")[0][0]
-    print(posicao)
 
-    expansoes = [self._direita, self._esquerda, self._cima, self._baixo]
+    expansoes = []
+    if no.aresta == "⬅️":
+      expansoes = [self._esquerda, self._cima, self._baixo]
+    elif no.aresta == "⬆️":
+      expansoes = [self._direita, self._esquerda, self._cima]
+    elif no.aresta == "⬇️":
+      expansoes = [self._direita, self._esquerda, self._baixo]
+    elif no.aresta == "➡️":
+      expansoes = [self._direita, self._cima, self._baixo]
+    else:
+      expansoes = [self._direita, self._esquerda, self._cima, self._baixo]
+
     random.shuffle(expansoes)
     for expansao in expansoes:
       no_sucessor = expansao(posicao, no)

@@ -10,7 +10,7 @@ def vertice_caminho(no):
   caminho = []
   while no.no_pai is not None:
     no = no.no_pai
-    if no.vertice is not None: caminho.append(no.vertice)
+    if no.aresta is not None: caminho.append(no.aresta)
   caminho.reverse()
   return caminho
 
