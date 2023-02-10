@@ -12,6 +12,7 @@ def dfs(problema):
 
   while not pilha.esta_vazio():
     no = pilha.pop()
+    visitados.adicionar(no)
 
     # faz o teste objetivo. Se chegou no resultado final
     # retorna o No correspondente
@@ -27,7 +28,6 @@ def dfs(problema):
     for no_sucessor in nos_sucessores:
       # pula estado_filho se já foi expandido
       if not visitados.foi_visitado(no_sucessor):
-        visitados.adicionar(no)
         pilha.push(no_sucessor)
 
   print(f"Estados visitados: {visitados.tamanho()}")
