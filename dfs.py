@@ -8,17 +8,15 @@ def dfs(problema):
   pilha.push(no)
 
   visitados = Visitados()
+  visitados.adicionar(no)
 
   while not pilha.esta_vazio():
     no = pilha.pop()
-    visitados.adicionar(no)
-    print("Nó Atual")
-    print(problema.imprimir(no))
-    print("\n")
 
     # faz o teste objetivo. Se chegou no resultado final
     # retorna o No correspondente
-    if(problema.testar_objetivo(no)):
+    resultado = problema.testar_objetivo(no)
+    if(resultado):
       print(f"Estados visitados: {visitados.tamanho()}")
       return no
     
@@ -26,16 +24,11 @@ def dfs(problema):
     nos_sucessores = problema.gerar_sucessores(no)
 
     # para cada sucessor, se armazena se ainda não visitado
-    print(f"Nós Sucessores: {len(nos_sucessores)}")
     for no_sucessor in nos_sucessores:
       # pula estado_filho se já foi expandido
       if not visitados.foi_visitado(no_sucessor):
-        #print(problema.imprimir(no_sucessor), end=" a\033[A")
-        print(problema.imprimir(no_sucessor))
-        print("---------")
+        visitados.adicionar(no)
         pilha.push(no_sucessor)
-        
-    print("\n")
 
   print(f"Estados visitados: {visitados.tamanho()}")
   return None

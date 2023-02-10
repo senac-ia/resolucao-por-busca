@@ -6,12 +6,33 @@ class QuebraCabecaDe8:
   def __init__(self):
     self.estado_objetivo = np.array(["1", "2", "3", "4", "5", "6", "7", "8", "_"])
     self.estado_inicial = np.array(["_", "1", "2", "3", "4", "5", "6", "7", "8"])
-    np.random.shuffle(self.estado_inicial)
-    
-  def define_estado_inicial(self, estado):
-    self.estado_inicial = estado
+
+  def tem_solucao(self, estado):
+      # Contar o número de inversões
+      inversoes = 0
+      for i in range(len(estado)):
+          for j in range(i+1, len(estado)):
+              if estado[i] != 0 and estado[j] != 0 and estado[i] > estado[j]:
+                  inversoes += 1
+
+      # Verifica se tem solução se o número de inversões for par
+      blank_row = 0
+      for row_index, row in enumerate(estado):
+          if "_" in row:
+              blank_row = row_index
+              break
+      if blank_row % 2 == 0:
+          return inversoes % 2 == 0
+      else:
+          return inversoes % 2 == 1
 
   def iniciar(self):
+    self.estado_inicial = np.array(["_", "1", "2", "3", "4", "5", "6", "7", "8"])
+    np.random.shuffle(self.estado_inicial)
+
+    while(not self.tem_solucao(self.estado_inicial)):
+      np.random.shuffle(self.estado_inicial)
+
     self.no_raiz = No(self.estado_inicial)
     return self.no_raiz
 

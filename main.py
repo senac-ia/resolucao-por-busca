@@ -7,13 +7,16 @@ from quebra_cabeca_de_4 import QuebraCabecaDe4
 import numpy as np
 
 if __name__ == "__main__":
-    #problema = QuebraCabecaDe8()
+    problema = QuebraCabecaDe8()
+    # problema não solucionável
+    # https://pt.stackoverflow.com/questions/333702/como-verificar-se-o-sliding-puzzle-%C3%A9-solucion%C3%A1vel
     #estado = np.array(["4", "2", "3", "_", "7", "8", "1", "5", "6"])
-    #problema.define_estado_inicial(estado)
-
-    problema = QuebraCabecaDe4()
-    estado = np.array(["_", "3", "1", "2"])
-    problema.define_estado_inicial(estado)
+    
+    #problema = QuebraCabecaDe4()
+    # problema não solucionável
+    #estado = np.array(["_", "3", "1", "2"])
+    # problema.define_estado_inicial(estado)
+    # print(problema.tem_solucao(estado))
 
     no_solucao = dfs(problema)
     
