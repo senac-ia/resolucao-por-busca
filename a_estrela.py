@@ -31,8 +31,8 @@ def a_estrela(problema):
       # pula estado_filho se já foi expandido
       if not visitados.foi_visitado(no_sucessor) or no_sucessor.custo > novo_custo:
         no_sucessor.custo = novo_custo
-        no_sucessor.heuristica = problema.heuristica(no_sucessor.estado)
-        
+        no_sucessor.heuristica = problema.heuristica(no_sucessor)
+      
         fila.push(no_sucessor)
 
   print(f"Estados visitados: {visitados.tamanho()}")

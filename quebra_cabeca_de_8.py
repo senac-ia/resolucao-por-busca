@@ -115,14 +115,16 @@ class QuebraCabecaDe8:
   # Heurística 1: Checar se os valores 
   # esta heurística não é admissível, pois, pode dificultar 
   # a chegada de um resultado final
-  def heuristica(self, estado):
-    resultado = ["1", "2", "3", "4", "5", "6", "7", "8", "_"]
+  def heuristica(self, no):
+    estado = no.estado
+    resultado = self.estado_objetivo
     return sum(1 for i in range(len(resultado)) if resultado[i] == estado[i])
 
   # Heurística 2: Distância para o resultado espero
   # Heurística adminissível, pois, sempre o resultado chega mais perto
   # Transformei o array em matriz para fazer cálculo de distância
-  def heuristica2(self, estado):
+  def heuristica2(self, no):
+    estado = no.estado
     resultado = [["1", "2", "3"], ["4", "5", "6"], ["7", "8", "_"]]
     estado_matriz = [estado[0:3], estado[3:6], estado[6:9]]
 
