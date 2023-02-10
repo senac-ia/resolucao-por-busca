@@ -27,7 +27,6 @@ class QuebraCabecaDe8:
           return inversoes % 2 == 1
 
   def iniciar(self):
-    self.estado_inicial = np.array(["_", "1", "2", "3", "4", "5", "6", "7", "8"])
     np.random.shuffle(self.estado_inicial)
 
     while(not self.tem_solucao(self.estado_inicial)):

@@ -19,13 +19,9 @@ if __name__ == "__main__":
     # print(problema.tem_solucao(estado))
 
     no_solucao = dfs(problema)
+    # no_solucao = bfs(problema)
     
-    # no_solucao = a_estrela(estado_inicial, 
-    #                         q.testar_objetivo, 
-    #                         q.gerar_sucessores, 
-    #                         q.heuristica2,
-    #                         q.custo,
-    #                         q.imprimir)
+    # no_solucao = a_estrela(problema)
 
     if(no_solucao is None):
         print("Não houve solução ao problema")
