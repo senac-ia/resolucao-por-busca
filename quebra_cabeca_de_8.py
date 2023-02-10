@@ -144,5 +144,5 @@ class QuebraCabecaDe8:
   # Função de custo: Quando custa mover de um 
   # estado_origem para estado_destino. No Quebra Cabeça 
   # de 8, este custo é fixo e arbitrariamente será 1.
-  def custo(self, estado_origem, estado_destino):
+  def custo(self, no, no_destino):
     return 1

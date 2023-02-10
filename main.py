@@ -18,10 +18,10 @@ if __name__ == "__main__":
     # problema.define_estado_inicial(estado)
     # print(problema.tem_solucao(estado))
 
-    no_solucao = dfs(problema)
+    #no_solucao = dfs(problema)
     # no_solucao = bfs(problema)
-    
-    # no_solucao = a_estrela(problema)
+
+    no_solucao = a_estrela(problema)
 
     if(no_solucao is None):
         print("Não houve solução ao problema")
