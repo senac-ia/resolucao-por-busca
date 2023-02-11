@@ -5,8 +5,10 @@ from aux import vertice_caminho, no_caminho
 from quebra_cabeca_de_8 import QuebraCabecaDe8
 from quebra_cabeca_de_4 import QuebraCabecaDe4
 import numpy as np
+from barqueiro import Barqueiro
 
 if __name__ == "__main__":
+    #problema = Barqueiro()
     problema = QuebraCabecaDe8()
     # problema não solucionável
     # https://pt.stackoverflow.com/questions/333702/como-verificar-se-o-sliding-puzzle-%C3%A9-solucion%C3%A1vel
@@ -18,10 +20,10 @@ if __name__ == "__main__":
     # problema.define_estado_inicial(estado)
     # print(problema.tem_solucao(estado))
 
-    #no_solucao = dfs(problema)
+    no_solucao = dfs(problema)
     # no_solucao = bfs(problema)
 
-    no_solucao = a_estrela(problema)
+    #no_solucao = a_estrela(problema)
 
     if(no_solucao is None):
         print("Não houve solução ao problema")

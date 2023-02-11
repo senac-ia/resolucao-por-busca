@@ -1,16 +1,16 @@
 def no_caminho(no):
   caminho = [no.estado]
   while no.no_pai is not None:
-    no = no.no_pai
     caminho.append(no.estado)
+    no = no.no_pai
   caminho.reverse()
   return caminho
 
 def vertice_caminho(no):
   caminho = []
   while no.no_pai is not None:
-    no = no.no_pai
     if no.aresta is not None: caminho.append(no.aresta)
+    no = no.no_pai
   caminho.reverse()
   return caminho
 
@@ -18,7 +18,7 @@ class Visitados:
   def __init__(self):
     # Conjuntos (Sets) em python e {1, 2, 3}
     # necessita ser uma tupla ou string por ser comparável com ==
-    self.visitados = set()
+    self.visitados = set({})
   
   def adicionar(self, no):
     self.visitados.add(tuple(no.estado))

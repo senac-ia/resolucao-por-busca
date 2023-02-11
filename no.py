@@ -6,5 +6,8 @@ class No:
     self.custo = custo
     self.heuristica = heuristica
 
+  def __repr__(self):
+    return str(self.estado)
+
   def __lt__(self, outro):
     return (self.custo + self.heuristica) < (outro.custo + outro.heuristica)
