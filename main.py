@@ -1,6 +1,7 @@
 from dfs import dfs
 from bfs import bfs
 from a_estrela import a_estrela
+from dijkstra import dijkstra
 from aux import vertice_caminho, no_caminho
 from quebra_cabeca_de_8 import QuebraCabecaDe8
 from quebra_cabeca_de_4 import QuebraCabecaDe4
@@ -21,11 +22,11 @@ if __name__ == "__main__":
   
   # print(problema.tem_solucao(estado))
 
-  (qtd_estados_visitados, no_solucao) = dfs(problema)
+  #(qtd_estados_visitados, no_solucao) = dfs(problema)
   #(qtd_estados_visitados, no_solucao) = bfs(problema)
-
   #(qtd_estados_visitados, no_solucao) = a_estrela(problema)
-
+  (qtd_estados_visitados, no_solucao) = dijkstra(problema)
+  
   if(no_solucao is None):
     print("Não houve solução ao problema")
   else:
