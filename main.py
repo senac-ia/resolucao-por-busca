@@ -3,10 +3,10 @@ from algoritmos.bfs import bfs
 from algoritmos.a_estrela import a_estrela
 from algoritmos.dijkstra import dijkstra
 from algoritmos.aux import vertice_caminho, no_caminho
-from quebra_cabeca_de_8 import QuebraCabecaDe8
-from quebra_cabeca_de_4 import QuebraCabecaDe4
-import numpy as np
-from barqueiro import Barqueiro
+
+from problemas.quebra_cabeca_de_8 import QuebraCabecaDe8
+from problemas.quebra_cabeca_de_4 import QuebraCabecaDe4
+from problemas.barqueiro import Barqueiro
 
 if __name__ == "__main__":
   #problema = Barqueiro()
