@@ -1,21 +1,23 @@
-from aux import Visitados
+from algoritmos.aux import Visitados
 
-# Breadth-First Search - Busca em Largura
-def bfs(problema):
+# Depth-First Search - Busca em Profundidade
+def dfs(problema):
   no = problema.iniciar()
 
-  fila = Fila()
-  fila.push(no)
+  pilha = Pilha()
+  pilha.push(no)
 
   visitados = Visitados()
+  visitados.adicionar(no)
 
-  while not fila.esta_vazio():
-    no = fila.pop()
+  while not pilha.esta_vazio():
+    no = pilha.pop()
     visitados.adicionar(no)
 
     # faz o teste objetivo. Se chegou no resultado final
     # retorna o No correspondente
-    if(problema.testar_objetivo(no)):
+    resultado = problema.testar_objetivo(no)
+    if(resultado):
       return (visitados.tamanho(), no)
     
     # função sucessores define os Nós sucessores
@@ -24,22 +26,26 @@ def bfs(problema):
     # para cada sucessor, se armazena se ainda não visitado
     for no_sucessor in nos_sucessores:
       # pula estado_filho se já foi expandido
-      if not visitados.foi_visitado(no_sucessor): fila.push(no_sucessor)
+      if not visitados.foi_visitado(no_sucessor):
+        pilha.push(no_sucessor)
 
   return (visitados.tamanho(), None)
 
-class Fila:
+class Pilha:
   def __init__(self):
-    self.fila = []
+    self.pilha = []
   
   def push(self, item):
-    self.fila.append(item)
+    self.pilha.append(item)
   
   def pop(self):
     if(self.esta_vazio()):
-        return None
+      return None
     else:
-        return self.fila.pop(0)
+      return self.pilha.pop()
 
   def esta_vazio(self):
-    return len(self.fila) == 0
+    return len(self.pilha) == 0
+
+  def tamanho(self):
+    return len(self.pilha)

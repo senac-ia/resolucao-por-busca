@@ -1,17 +1,17 @@
-from aux import Visitados
+from algoritmos.aux import Visitados
+from queue import PriorityQueue
 
-# Depth-First Search - Busca em Profundidade
-def dfs(problema):
+def dijkstra(problema):
   no = problema.iniciar()
 
-  pilha = Pilha()
-  pilha.push(no)
+  fila = FilaPrioridade()
+  fila.push(0,no)
 
   visitados = Visitados()
   visitados.adicionar(no)
 
-  while not pilha.esta_vazio():
-    no = pilha.pop()
+  while not fila.esta_vazio():
+    no = fila.pop()
     visitados.adicionar(no)
 
     # faz o teste objetivo. Se chegou no resultado final
@@ -27,25 +27,26 @@ def dfs(problema):
     for no_sucessor in nos_sucessores:
       # pula estado_filho se já foi expandido
       if not visitados.foi_visitado(no_sucessor):
-        pilha.push(no_sucessor)
+        no_sucessor.custo = no.custo + problema.custo(no, no_sucessor)
+        dijkstra = no_sucessor.custo
+
+        fila.push(dijkstra, no_sucessor)
 
   return (visitados.tamanho(), None)
 
-class Pilha:
+class FilaPrioridade:
   def __init__(self):
-    self.pilha = []
+    self.fila = PriorityQueue()
   
-  def push(self, item):
-    self.pilha.append(item)
+  def push(self, valor, item):
+    self.fila.put((valor, item))
   
   def pop(self):
     if(self.esta_vazio()):
       return None
     else:
-      return self.pilha.pop()
+      (_, no) = self.fila.get()
+      return no
 
   def esta_vazio(self):
-    return len(self.pilha) == 0
-
-  def tamanho(self):
-    return len(self.pilha)
+    return self.fila.empty()

@@ -1,5 +1,4 @@
-from aux import Visitados
-import heapq
+from algoritmos.aux import Visitados
 from queue import PriorityQueue
 
 def a_estrela(problema):

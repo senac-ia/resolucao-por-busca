@@ -1,8 +1,8 @@
-from dfs import dfs
-from bfs import bfs
-from a_estrela import a_estrela
-from dijkstra import dijkstra
-from aux import vertice_caminho, no_caminho
+from algoritmos.dfs import dfs
+from algoritmos.bfs import bfs
+from algoritmos.a_estrela import a_estrela
+from algoritmos.dijkstra import dijkstra
+from algoritmos.aux import vertice_caminho, no_caminho
 from quebra_cabeca_de_8 import QuebraCabecaDe8
 from quebra_cabeca_de_4 import QuebraCabecaDe4
 import numpy as np

@@ -1,15 +1,13 @@
-from aux import Visitados
-import heapq
-from queue import PriorityQueue
+from algoritmos.aux import Visitados
 
-def dijkstra(problema):
+# Breadth-First Search - Busca em Largura
+def bfs(problema):
   no = problema.iniciar()
 
-  fila = FilaPrioridade()
-  fila.push(0,no)
+  fila = Fila()
+  fila.push(no)
 
   visitados = Visitados()
-  visitados.adicionar(no)
 
   while not fila.esta_vazio():
     no = fila.pop()
@@ -17,8 +15,7 @@ def dijkstra(problema):
 
     # faz o teste objetivo. Se chegou no resultado final
     # retorna o No correspondente
-    resultado = problema.testar_objetivo(no)
-    if(resultado):
+    if(problema.testar_objetivo(no)):
       return (visitados.tamanho(), no)
     
     # função sucessores define os Nós sucessores
@@ -27,27 +24,22 @@ def dijkstra(problema):
     # para cada sucessor, se armazena se ainda não visitado
     for no_sucessor in nos_sucessores:
       # pula estado_filho se já foi expandido
-      if not visitados.foi_visitado(no_sucessor):
-        no_sucessor.custo = no.custo + problema.custo(no, no_sucessor)
-        dijkstra = no_sucessor.custo
-
-        fila.push(dijkstra, no_sucessor)
+      if not visitados.foi_visitado(no_sucessor): fila.push(no_sucessor)
 
   return (visitados.tamanho(), None)
 
-class FilaPrioridade:
+class Fila:
   def __init__(self):
-    self.fila = PriorityQueue()
+    self.fila = []
   
-  def push(self, valor, item):
-    self.fila.put((valor, item))
+  def push(self, item):
+    self.fila.append(item)
   
   def pop(self):
     if(self.esta_vazio()):
-      return None
+        return None
     else:
-      (_, no) = self.fila.get()
-      return no
+        return self.fila.pop(0)
 
   def esta_vazio(self):
-    return self.fila.empty()
+    return len(self.fila) == 0
