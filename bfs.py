@@ -16,8 +16,7 @@ def bfs(problema):
     # faz o teste objetivo. Se chegou no resultado final
     # retorna o No correspondente
     if(problema.testar_objetivo(no)):
-      print(f"Estados visitados: {visitados.tamanho()}")
-      return no
+      return (visitados.tamanho(), no)
     
     # função sucessores define os Nós sucessores
     nos_sucessores = problema.gerar_sucessores(no)
@@ -27,8 +26,7 @@ def bfs(problema):
       # pula estado_filho se já foi expandido
       if not visitados.foi_visitado(no_sucessor): fila.push(no_sucessor)
 
-  print(f"Estados visitados: {visitados.tamanho()}")
-  return None
+  return (visitados.tamanho(), None)
 
 class Fila:
   def __init__(self):

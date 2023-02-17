@@ -18,8 +18,7 @@ def dfs(problema):
     # retorna o No correspondente
     resultado = problema.testar_objetivo(no)
     if(resultado):
-      print(f"Estados visitados: {visitados.tamanho()}")
-      return no
+      return (visitados.tamanho(), no)
     
     # função sucessores define os Nós sucessores
     nos_sucessores = problema.gerar_sucessores(no)
@@ -30,8 +29,7 @@ def dfs(problema):
       if not visitados.foi_visitado(no_sucessor):
         pilha.push(no_sucessor)
 
-  print(f"Estados visitados: {visitados.tamanho()}")
-  return None
+  return (visitados.tamanho(), None)
 
 class Pilha:
   def __init__(self):

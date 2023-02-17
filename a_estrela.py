@@ -1,11 +1,12 @@
 from aux import Visitados
 import heapq
+from queue import PriorityQueue
 
 def a_estrela(problema):
   no = problema.iniciar()
 
   fila = FilaPrioridade()
-  fila.push(no)
+  fila.push(0,no)
 
   visitados = Visitados()
   visitados.adicionar(no)
@@ -14,42 +15,40 @@ def a_estrela(problema):
     no = fila.pop()
     visitados.adicionar(no)
 
-   # faz o teste objetivo. Se chegou no resultado final
+    # faz o teste objetivo. Se chegou no resultado final
     # retorna o No correspondente
     resultado = problema.testar_objetivo(no)
     if(resultado):
-      print(f"Estados visitados: {visitados.tamanho()}")
-      return no
+      return (visitados.tamanho(), no)
     
     # função sucessores define os Nós sucessores
     nos_sucessores = problema.gerar_sucessores(no)
 
     # para cada sucessor, se armazena se ainda não visitado
     for no_sucessor in nos_sucessores:
-      novo_custo = no.custo + problema.custo(no, no_sucessor)
-
       # pula estado_filho se já foi expandido
-      if not visitados.foi_visitado(no_sucessor) or no_sucessor.custo > novo_custo:
-        no_sucessor.custo = novo_custo
+      if not visitados.foi_visitado(no_sucessor):
+        no_sucessor.custo = no.custo + problema.custo(no, no_sucessor)
         no_sucessor.heuristica = problema.heuristica(no_sucessor)
-      
-        fila.push(no_sucessor)
+        a_estrela_n = (no_sucessor.custo + no_sucessor.heuristica)
 
-  print(f"Estados visitados: {visitados.tamanho()}")
-  return None
+        fila.push(a_estrela_n, no_sucessor)
+
+  return (visitados.tamanho(), None)
 
 class FilaPrioridade:
   def __init__(self):
-    self.fila = []
+    self.fila = PriorityQueue()
   
-  def push(self, item):
-    heapq.heappush(self.fila, item)
+  def push(self, valor, item):
+    self.fila.put((valor, item))
   
   def pop(self):
     if(self.esta_vazio()):
-        return None
+      return None
     else:
-        return heapq.heappop(self.fila)
+      (_, no) = self.fila.get()
+      return no
 
   def esta_vazio(self):
-    return len(self.fila) == 0
+    return self.fila.empty()
