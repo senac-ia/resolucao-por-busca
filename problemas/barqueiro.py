@@ -2,76 +2,81 @@ import itertools
 from no import No
 
 class Barqueiro:
-    def __init__(self):
-        self.estado_objetivo = (frozenset(),frozenset({"🚣‍♂️", "🐑","🥬","🐺"}))
-        self.estado_inicial = (frozenset({"🐑","🥬","🐺","🚣‍♂️"}),frozenset())
+  def __init__(self):
+    self.estado_objetivo = (frozenset(),frozenset({"🚣‍♂️", "🐑","🥬","🐺"}))
+    self.estado_inicial = (frozenset({"🐑","🥬","🐺","🚣‍♂️"}),frozenset())
 
-    def imprimir(self, no):
-        return no.estado
+  def imprimir(self, no):
+    return no.estado
 
-    def gerar_no(self, estado):
-        return No(estado)
+  def gerar_no(self, estado):
+    return No(estado)
 
-    def iniciar(self):
-        self.no_raiz = No(self.estado_inicial)
-        return self.no_raiz
+  def iniciar(self):
+    self.no_raiz = No(self.estado_inicial)
+    return self.no_raiz
 
-    def testar_objetivo(self, no):
-        return no.estado == self.estado_objetivo
-    
-    def gerar_sucessores(self, no):
-        estado = no.estado
+  def testar_objetivo(self, no):
+    return no.estado == self.estado_objetivo
+  
+  def gerar_sucessores(self, no):
+    estado = no.estado
 
-        # onde testá o barqueiro
-        (esquerda, direita) = estado
-        sucessores = []
-        
-        if "🚣‍♂️" in esquerda:
-            direita = frozenset(direita.union({"🚣‍♂️"}))
-            esquerda = frozenset(esquerda.difference({"🚣‍♂️"}))
-            if self._valida(esquerda):
-                sucessores.append(No((esquerda,direita), no, "🚣‍♂️D"))
+    # onde testá o barqueiro
+    (esquerda, direita) = estado
+    sucessores = []
+      
+    if "🚣‍♂️" in esquerda:
+      direita = frozenset(direita.union({"🚣‍♂️"}))
+      esquerda = frozenset(esquerda.difference({"🚣‍♂️"}))
+      
+      # barqueiro vai sozinho
+      if self._valida(esquerda):
+        sucessores.append(No((esquerda,direita), no, "🚣‍♂️D"))
 
-            if (len(esquerda) >= 1):
-                for elemento in list(esquerda):
-                    direita2 = frozenset(direita.union({elemento}))
-                    esquerda2 = frozenset(esquerda.difference({elemento}))
-                    if self._valida(esquerda2):
-                        sucessores.append(No((esquerda2,direita2), no, "🚣" + elemento + "D"))
+      sucessores += self._barqueiro_leva_um(no, esquerda, direita, "E")
+      sucessores += self._barqueiro_leva_dois(no, esquerda, direita, "E")
+    else: 
+      direita = frozenset(direita.difference({"🚣‍♂️"}))
+      esquerda = frozenset(esquerda.union({"🚣‍♂️"}))
+      # barqueiro vai sozinho
+      if self._valida(direita):
+        sucessores.append(No((esquerda,direita), no, "🚣‍♂️E"))
 
-            if (len(esquerda) >= 2):
-                combinacao_elementos = list(itertools.combinations(esquerda, 2))
-                for (e1,e2) in combinacao_elementos:
-                    direita2 = frozenset(direita.union({e1,e2}))
-                    esquerda2 = frozenset(esquerda.difference({e1,e2}))
-                    if self._valida(esquerda2):
-                        sucessores.append(No((esquerda2,direita2), no, "🚣" + e1 + e2 + "D"))
-        else: 
-            direita = frozenset(direita.difference({"🚣‍♂️"}))
-            esquerda = frozenset(esquerda.union({"🚣‍♂️"}))
-            if self._valida(direita):
-                sucessores.append(No((esquerda,direita), no, "🚣‍♂️E"))
+      sucessores += self._barqueiro_leva_um(no, direita, esquerda, "D")
+      sucessores += self._barqueiro_leva_dois(no, direita, esquerda, "D")
+    return sucessores
 
-            if (len(direita) >= 1):
-                for elemento in list(direita):
-                    esquerda2 = frozenset(esquerda.union({elemento}))
-                    direita2 = frozenset(direita.difference({elemento}))
-                    if self._valida(direita2):
-                        sucessores.append(No((esquerda2,direita2), no, "🚣" + elemento + "E"))
+  def _barqueiro_leva_um(self, no, lado, lado_oposto, simbolo):
+    sucessores = []
+    if (len(lado) >= 1):
+      for elemento in list(lado):
+        lado_oposto2 = frozenset(lado_oposto.union({elemento}))
+        lado2 = frozenset(lado.difference({elemento}))
+        if self._valida(lado2):
+          if simbolo == "D":
+            sucessores.append(No((lado_oposto2,lado2), no, "🚣" + elemento + "E"))
+          else:
+            sucessores.append(No((lado2,lado_oposto2), no, "🚣" + elemento + "D"))
+    return sucessores
 
-            if (len(direita) >= 2):
-                combinacao_elementos = list(itertools.combinations(direita, 2))
-                for (e1,e2) in combinacao_elementos:
-                    esquerda2 = frozenset(esquerda.union({e1,e2}))
-                    direita2 = frozenset(direita.difference({e1,e2}))
-                    if self._valida(direita2):
-                        sucessores.append(No((esquerda2,direita2), no, "🚣" + e1 + e2 + "E"))
+  def _barqueiro_leva_dois(self, no, lado, lado_oposto, simbolo):
+    sucessores = []
+    if (len(lado) >= 2):
+      combinacao_elementos = list(itertools.combinations(lado, 2))
+      for (e1,e2) in combinacao_elementos:
+        lado_oposto2 = frozenset(lado_oposto.union({e1,e2}))
+        lado2 = frozenset(lado.difference({e1,e2}))
+        if self._valida(lado2):
+          if simbolo == "D":
+            sucessores.append(No((lado_oposto2,lado2), no, "🚣" + e1 + e2 + "E"))
+          else:
+            sucessores.append(No((lado2,lado_oposto2), no, "🚣" + e1 + e2 + "D"))
+    return sucessores
 
-        return sucessores
-
-    def _valida(self, lado):
-        if("🐑" in lado and "🥬" in lado):
-            return False
-        if("🐑" in lado and "🐺" in lado):
-            return False
-        return True
+  def _valida(self, lado):
+    if("🐑" in lado and "🥬" in lado):
+      return False
+    if("🐑" in lado and "🐺" in lado):
+      return False
+    return True
